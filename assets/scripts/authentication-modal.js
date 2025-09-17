@@ -1713,7 +1713,14 @@ function handleSignOut() {
     }
 }
 
+// Handle avatar click to navigate to my account
+function handleAvatarClick() {
+    console.log('Avatar clicked, navigating to my account');
+    window.location.href = 'my-account.html';
+}
+
 // Make functions globally available
 window.updateSidebarUserDisplay = updateSidebarUserDisplay;
 window.handleSignOut = handleSignOut;
+window.handleAvatarClick = handleAvatarClick;
 
