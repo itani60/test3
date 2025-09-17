@@ -62,6 +62,7 @@ async function loadUserProfile() {
         const userData = await awsAuth.getUserInfo(currentUser.email);
         
         console.log('User profile data received:', userData);
+        console.log('User data structure:', JSON.stringify(userData, null, 2));
         
         // Update profile display
         updateProfileDisplay(userData);
@@ -80,14 +81,22 @@ async function loadUserProfile() {
  */
 function updateProfileDisplay(userData) {
     try {
+        console.log('Updating profile display with data:', userData);
+        
         // Update profile name
         const profileName = document.querySelector('.profile-name');
-        if (profileName && userData.firstName && userData.lastName) {
-            profileName.textContent = `${userData.firstName} ${userData.lastName}`;
-        } else if (profileName && userData.name) {
-            profileName.textContent = userData.name;
-        } else if (profileName) {
-            profileName.textContent = 'User';
+        if (profileName) {
+            if (userData.firstName && userData.lastName) {
+                profileName.textContent = `${userData.firstName} ${userData.lastName}`;
+            } else if (userData.name) {
+                profileName.textContent = userData.name;
+            } else if (userData.email) {
+                // Extract name from email if no name is available
+                const emailName = userData.email.split('@')[0];
+                profileName.textContent = emailName.charAt(0).toUpperCase() + emailName.slice(1);
+            } else {
+                profileName.textContent = 'User';
+            }
         }
         
         // Update profile email
@@ -114,6 +123,9 @@ function updateProfileDisplay(userData) {
             updateProfilePicture(userData.picture);
         }
         
+        // Update avatar initials
+        updateAvatarInitials(userData);
+        
         // Update additional profile information
         updateAdditionalProfileInfo(userData);
         
@@ -132,6 +144,33 @@ function updateProfilePicture(pictureUrl) {
     if (profileAvatar && pictureUrl) {
         profileAvatar.src = pictureUrl;
         profileAvatar.alt = 'Profile Picture';
+    }
+}
+
+/**
+ * Update avatar initials
+ */
+function updateAvatarInitials(userData) {
+    const avatarInitials = document.querySelector('.profile-initials');
+    if (avatarInitials) {
+        let initials = 'U'; // Default
+        
+        if (userData.firstName && userData.lastName) {
+            initials = (userData.firstName.charAt(0) + userData.lastName.charAt(0)).toUpperCase();
+        } else if (userData.name) {
+            const nameParts = userData.name.split(' ');
+            if (nameParts.length >= 2) {
+                initials = (nameParts[0].charAt(0) + nameParts[nameParts.length - 1].charAt(0)).toUpperCase();
+            } else {
+                initials = nameParts[0].charAt(0).toUpperCase();
+            }
+        } else if (userData.email) {
+            const emailName = userData.email.split('@')[0];
+            initials = emailName.charAt(0).toUpperCase();
+        }
+        
+        avatarInitials.textContent = initials;
+        console.log('Avatar initials updated to:', initials);
     }
 }
 
