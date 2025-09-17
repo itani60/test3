@@ -72,7 +72,14 @@ async function loadUserProfile() {
         
     } catch (error) {
         console.error('Error loading user profile:', error);
-        showErrorState('Failed to load profile data. Please try again.');
+        console.error('Error details:', error.message);
+        console.error('Error stack:', error.stack);
+        
+        // Even if API fails, try to update with available data
+        console.log('Attempting fallback profile update with current user data');
+        updateProfileDisplay(null); // This will use currentUser.email as fallback
+        
+        showErrorState(`Failed to load profile data: ${error.message}`);
     }
 }
 
@@ -83,16 +90,25 @@ function updateProfileDisplay(userData) {
     try {
         console.log('Updating profile display with data:', userData);
         
+        // If no userData, use current user email as fallback
+        if (!userData && currentUser && currentUser.email) {
+            userData = { email: currentUser.email };
+        }
+        
         // Update profile name
         const profileName = document.querySelector('.profile-name');
         if (profileName) {
-            if (userData.firstName && userData.lastName) {
+            if (userData && userData.firstName && userData.lastName) {
                 profileName.textContent = `${userData.firstName} ${userData.lastName}`;
-            } else if (userData.name) {
+            } else if (userData && userData.name) {
                 profileName.textContent = userData.name;
-            } else if (userData.email) {
+            } else if (userData && userData.email) {
                 // Extract name from email if no name is available
                 const emailName = userData.email.split('@')[0];
+                profileName.textContent = emailName.charAt(0).toUpperCase() + emailName.slice(1);
+            } else if (currentUser && currentUser.email) {
+                // Fallback to current user email
+                const emailName = currentUser.email.split('@')[0];
                 profileName.textContent = emailName.charAt(0).toUpperCase() + emailName.slice(1);
             } else {
                 profileName.textContent = 'User';
@@ -155,17 +171,21 @@ function updateAvatarInitials(userData) {
     if (avatarInitials) {
         let initials = 'U'; // Default
         
-        if (userData.firstName && userData.lastName) {
+        if (userData && userData.firstName && userData.lastName) {
             initials = (userData.firstName.charAt(0) + userData.lastName.charAt(0)).toUpperCase();
-        } else if (userData.name) {
+        } else if (userData && userData.name) {
             const nameParts = userData.name.split(' ');
             if (nameParts.length >= 2) {
                 initials = (nameParts[0].charAt(0) + nameParts[nameParts.length - 1].charAt(0)).toUpperCase();
             } else {
                 initials = nameParts[0].charAt(0).toUpperCase();
             }
-        } else if (userData.email) {
+        } else if (userData && userData.email) {
             const emailName = userData.email.split('@')[0];
+            initials = emailName.charAt(0).toUpperCase();
+        } else if (currentUser && currentUser.email) {
+            // Fallback to current user email
+            const emailName = currentUser.email.split('@')[0];
             initials = emailName.charAt(0).toUpperCase();
         }
         
@@ -321,10 +341,28 @@ function getUserProfileData() {
     return userProfileData;
 }
 
+// Test function to debug profile loading
+async function testProfileLoading() {
+    console.log('=== Testing Profile Loading ===');
+    console.log('Current user:', currentUser);
+    console.log('User email from storage:', localStorage.getItem('userEmail') || sessionStorage.getItem('userEmail'));
+    
+    try {
+        console.log('Testing API call...');
+        const result = await awsAuth.getUserInfo(currentUser.email);
+        console.log('API result:', result);
+    } catch (error) {
+        console.error('API error:', error);
+    }
+    
+    console.log('=== End Test ===');
+}
+
 // Export functions for global access
 window.myProfile = {
     refreshProfile,
     getCurrentUser,
     getUserProfileData,
-    handleSignOut
+    handleSignOut,
+    testProfileLoading
 };
