@@ -6,11 +6,11 @@
 /* Sidebar User Section - Logged In State */
 .sidebar-user {
     padding: 20px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #ff4757 0%, #ff3742 100%);
     color: white;
     border-radius: 12px;
     margin: 15px;
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3);
 }
 
 .user-info {
@@ -21,12 +21,53 @@
 
 .user-avatar {
     margin-right: 12px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ff4757 0%, #ff3742 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(255, 71, 87, 0.3);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
 }
 
-.user-avatar i {
-    font-size: 40px;
+.user-avatar:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(255, 71, 87, 0.4);
+}
+
+.user-avatar::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+}
+
+.user-avatar:hover::before {
+    background: linear-gradient(45deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%);
+}
+
+.user-avatar .initials {
+    font-size: 18px;
+    font-weight: 700;
     color: white;
-    opacity: 0.9;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    z-index: 1;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.user-avatar:hover .initials {
+    transform: scale(1.1);
 }
 
 .user-details {
@@ -87,19 +128,19 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #ff4757 0%, #ff3742 100%);
     color: white;
     padding: 12px 24px;
     border-radius: 8px;
     text-decoration: none;
     font-weight: 500;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    box-shadow: 0 4px 15px rgba(255, 71, 87, 0.3);
 }
 
 .login-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    box-shadow: 0 6px 20px rgba(255, 71, 87, 0.4);
     color: white;
     text-decoration: none;
 }
