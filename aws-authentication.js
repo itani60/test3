@@ -132,9 +132,9 @@ async function googleAuth(googleData) {
 }
 
 // Get user info
-async function getUserInfo() {
+async function getUserInfo(email) {
     try {
-        const response = await makeApiCall('/get-user-info', 'POST');
+        const response = await makeApiCall('/get-user-info', 'POST', { email });
         return response;
     } catch (error) {
         throw new Error(`Get user info failed: ${error.message}`);
