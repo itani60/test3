@@ -1543,13 +1543,34 @@ document.addEventListener('DOMContentLoaded', function() {
 // SIDEBAR USER DISPLAY FUNCTIONS
 // ========================================
 
+// Generate initials from email
+function generateInitials(email) {
+    if (!email) return 'U';
+    
+    // Extract name from email (part before @)
+    const namePart = email.split('@')[0];
+    
+    // If it's a typical email format like "john.doe" or "johndoe"
+    if (namePart.includes('.')) {
+        const parts = namePart.split('.');
+        return (parts[0][0] + parts[1][0]).toUpperCase();
+    } else if (namePart.length >= 2) {
+        // For single word emails, take first two characters
+        return namePart.substring(0, 2).toUpperCase();
+    } else {
+        // Fallback to first character
+        return namePart[0].toUpperCase();
+    }
+}
+
 // Update sidebar user display based on login state
 function updateSidebarUserDisplay() {
     const sidebarLogin = document.getElementById('sidebarLogin');
     const sidebarUser = document.getElementById('sidebarUser');
     const sidebarUserEmail = document.getElementById('sidebarUserEmail');
+    const sidebarUserInitials = document.getElementById('sidebarUserInitials');
     
-    if (sidebarLogin && sidebarUser && sidebarUserEmail) {
+    if (sidebarLogin && sidebarUser && sidebarUserEmail && sidebarUserInitials) {
         // Check if user is logged in (you can modify this logic based on your auth state)
         const isLoggedIn = localStorage.getItem('userEmail') || sessionStorage.getItem('userEmail');
         
@@ -1558,6 +1579,7 @@ function updateSidebarUserDisplay() {
             sidebarLogin.style.display = 'none';
             sidebarUser.style.display = 'block';
             sidebarUserEmail.textContent = isLoggedIn;
+            sidebarUserInitials.textContent = generateInitials(isLoggedIn);
         } else {
             // Show login button
             sidebarLogin.style.display = 'block';
