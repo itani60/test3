@@ -1148,26 +1148,54 @@ async function handleSocialLogin(provider) {
         // Show loading message
         showInfo(`Connecting to ${provider}...`, 'Social Login');
         
-        // For now, we'll simulate Google auth data
-        // In a real implementation, you'd get this from Google's OAuth flow
-        const googleData = {
-            provider: provider.toLowerCase(),
-            // This would come from Google's authentication response
-            idToken: 'simulated_google_token',
-            accessToken: 'simulated_access_token'
-        };
-        
-        // Call AWS Google authentication
-        const response = await awsAuth.googleAuth(googleData);
-        
-        // Success - close login modal and update UI
-        closeLoginModal();
-        updateLoginState(true, response.user?.email || 'google@user.com');
-        showInfo(`Welcome! Successfully logged in with ${provider}`, 'Login Successful');
+        // Initialize Google Identity Services
+        if (typeof google !== 'undefined' && google.accounts) {
+            google.accounts.id.initialize({
+                client_id: '921064121179-1nco9up7a0b2p399sr2eo9m3lepncpb6.apps.googleusercontent.com', // Replace with your actual Client ID
+                callback: handleGoogleResponse
+            });
+            
+            // Trigger Google sign-in
+            google.accounts.id.prompt();
+        } else {
+            throw new Error('Google Identity Services not loaded');
+        }
         
     } catch (error) {
         console.error(`${provider} login failed:`, error);
         showError(error.message || `Failed to login with ${provider}. Please try again.`);
+    }
+}
+
+// Handle Google authentication response
+async function handleGoogleResponse(response) {
+    try {
+        console.log('Google response:', response);
+        
+        // Decode the JWT token to get user info
+        const payload = JSON.parse(atob(response.credential.split('.')[1]));
+        console.log('Google user info:', payload);
+        
+        // Prepare data for AWS authentication
+        const googleData = {
+            provider: 'google',
+            idToken: response.credential,
+            email: payload.email,
+            name: payload.name,
+            picture: payload.picture
+        };
+        
+        // Call AWS Google authentication
+        const awsResponse = await awsAuth.googleAuth(googleData);
+        
+        // Success - close login modal and update UI
+        closeLoginModal();
+        updateLoginState(true, payload.email);
+        showInfo(`Welcome! Successfully logged in with Google`, 'Login Successful');
+        
+    } catch (error) {
+        console.error('Google authentication failed:', error);
+        showError(error.message || 'Failed to authenticate with Google. Please try again.');
     }
 }
 
@@ -1179,26 +1207,54 @@ async function handleSocialRegister(provider) {
         // Show loading message
         showInfo(`Connecting to ${provider}...`, 'Social Registration');
         
-        // For now, we'll simulate Google auth data
-        // In a real implementation, you'd get this from Google's OAuth flow
-        const googleData = {
-            provider: provider.toLowerCase(),
-            // This would come from Google's authentication response
-            idToken: 'simulated_google_token',
-            accessToken: 'simulated_access_token'
-        };
-        
-        // Call AWS Google authentication
-        const response = await awsAuth.googleAuth(googleData);
-        
-        // Success - close register modal and update UI
-        closeRegisterModal();
-        updateLoginState(true, response.user?.email || 'google@user.com');
-        showInfo(`Welcome! Successfully registered with ${provider}`, 'Registration Successful');
+        // Initialize Google Identity Services
+        if (typeof google !== 'undefined' && google.accounts) {
+            google.accounts.id.initialize({
+                client_id: '921064121179-1nco9up7a0b2p399sr2eo9m3lepncpb6.apps.googleusercontent.com', // Replace with your actual Client ID
+                callback: handleGoogleRegistrationResponse
+            });
+            
+            // Trigger Google sign-in
+            google.accounts.id.prompt();
+        } else {
+            throw new Error('Google Identity Services not loaded');
+        }
         
     } catch (error) {
         console.error(`${provider} registration failed:`, error);
         showError(error.message || `Failed to register with ${provider}. Please try again.`);
+    }
+}
+
+// Handle Google registration response
+async function handleGoogleRegistrationResponse(response) {
+    try {
+        console.log('Google registration response:', response);
+        
+        // Decode the JWT token to get user info
+        const payload = JSON.parse(atob(response.credential.split('.')[1]));
+        console.log('Google user info:', payload);
+        
+        // Prepare data for AWS authentication
+        const googleData = {
+            provider: 'google',
+            idToken: response.credential,
+            email: payload.email,
+            name: payload.name,
+            picture: payload.picture
+        };
+        
+        // Call AWS Google authentication
+        const awsResponse = await awsAuth.googleAuth(googleData);
+        
+        // Success - close register modal and update UI
+        closeRegisterModal();
+        updateLoginState(true, payload.email);
+        showInfo(`Welcome! Successfully registered with Google`, 'Registration Successful');
+        
+    } catch (error) {
+        console.error('Google registration failed:', error);
+        showError(error.message || 'Failed to register with Google. Please try again.');
     }
 }
 
@@ -1266,7 +1322,7 @@ document.addEventListener('DOMContentLoaded', function() {
         loginModalOverlay.addEventListener('click', function(e) {
             if (e.target === loginModalOverlay) {
         closeLoginModal();
-            }
+    }
         });
     }
     
@@ -1304,7 +1360,7 @@ document.addEventListener('DOMContentLoaded', function() {
         registerModalOverlay.addEventListener('click', function(e) {
             if (e.target === registerModalOverlay) {
         closeRegisterModal();
-            }
+    }
         });
     }
     
@@ -1364,7 +1420,7 @@ document.addEventListener('DOMContentLoaded', function() {
         otpModalOverlay.addEventListener('click', function(e) {
             if (e.target === otpModalOverlay) {
         closeOtpModal();
-            }
+    }
         });
     }
     
@@ -1546,7 +1602,7 @@ document.addEventListener('DOMContentLoaded', function() {
             } else if (isRegisterModalOpen) {
         closeRegisterModal();
             } else if (isOtpModalOpen) {
-                closeOtpModal();
+        closeOtpModal();
             } else if (isForgotModalOpen) {
         closeForgotModal();
             } else if (isResetModalOpen) {
