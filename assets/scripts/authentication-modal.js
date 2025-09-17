@@ -1141,21 +1141,65 @@ function updateLoginState(isLoggedIn, userEmail = '') {
 }
 
 // Handle social login
-function handleSocialLogin(provider) {
+async function handleSocialLogin(provider) {
     console.log(`Social login with ${provider}`);
-    showInfo(`Redirecting to ${provider} login...`, 'Social Login');
     
-    // Here you would typically redirect to OAuth provider
-    // window.location.href = `/auth/${provider}`;
+    try {
+        // Show loading message
+        showInfo(`Connecting to ${provider}...`, 'Social Login');
+        
+        // For now, we'll simulate Google auth data
+        // In a real implementation, you'd get this from Google's OAuth flow
+        const googleData = {
+            provider: provider.toLowerCase(),
+            // This would come from Google's authentication response
+            idToken: 'simulated_google_token',
+            accessToken: 'simulated_access_token'
+        };
+        
+        // Call AWS Google authentication
+        const response = await awsAuth.googleAuth(googleData);
+        
+        // Success - close login modal and update UI
+        closeLoginModal();
+        updateLoginState(true, response.user?.email || 'google@user.com');
+        showInfo(`Welcome! Successfully logged in with ${provider}`, 'Login Successful');
+        
+    } catch (error) {
+        console.error(`${provider} login failed:`, error);
+        showError(error.message || `Failed to login with ${provider}. Please try again.`);
+    }
 }
 
 // Handle social registration
-function handleSocialRegister(provider) {
+async function handleSocialRegister(provider) {
     console.log(`Social registration with ${provider}`);
-    showInfo(`Redirecting to ${provider} registration...`, 'Social Registration');
     
-    // Here you would typically redirect to OAuth provider
-    // window.location.href = `/auth/${provider}`;
+    try {
+        // Show loading message
+        showInfo(`Connecting to ${provider}...`, 'Social Registration');
+        
+        // For now, we'll simulate Google auth data
+        // In a real implementation, you'd get this from Google's OAuth flow
+        const googleData = {
+            provider: provider.toLowerCase(),
+            // This would come from Google's authentication response
+            idToken: 'simulated_google_token',
+            accessToken: 'simulated_access_token'
+        };
+        
+        // Call AWS Google authentication
+        const response = await awsAuth.googleAuth(googleData);
+        
+        // Success - close register modal and update UI
+        closeRegisterModal();
+        updateLoginState(true, response.user?.email || 'google@user.com');
+        showInfo(`Welcome! Successfully registered with ${provider}`, 'Registration Successful');
+        
+    } catch (error) {
+        console.error(`${provider} registration failed:`, error);
+        showError(error.message || `Failed to register with ${provider}. Please try again.`);
+    }
 }
 
 // ========================================
@@ -1616,3 +1660,4 @@ function handleSignOut() {
 // Make functions globally available
 window.updateSidebarUserDisplay = updateSidebarUserDisplay;
 window.handleSignOut = handleSignOut;
+
