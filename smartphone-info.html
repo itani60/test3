@@ -1,0 +1,2614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CompareHubPrices - Compare Prices Across Categories</title>
+    <!-- Modernizr -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/modals.css">
+    <link rel="stylesheet" href="assets/css/google-button.css">
+    <link rel="stylesheet" href="assets/css/footer.css">
+    <link rel="stylesheet" href="assets/css/notifications.css">
+
+    
+    <!-- Product Details CSS -->
+    <style>
+        .product-details-section {
+            padding: 2rem 0;
+        }
+        
+        .product-details-wrapper {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        
+        .product-image-container {
+            position: relative;
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .product-main-image {
+            max-width: 100%;
+            max-height: 400px;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+        
+        
+        
+        .product-info {
+            padding: 1rem 0;
+            position: relative;
+        }
+        
+        
+        .product-breadcrumb {
+            font-size: 0.9rem;
+            color: #6b7280;
+            margin: 0 0 1rem 0;
+        }
+        
+        .product-breadcrumb a {
+            color: #ef4444;
+            text-decoration: none;
+        }
+        
+        .product-breadcrumb i {
+            margin: 0 0.5rem;
+            font-size: 0.8rem;
+        }
+        
+        .product-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+        
+        .product-subtitle {
+            font-size: 1.2rem;
+            color: #6b7280;
+            margin-bottom: 1rem;
+        }
+        
+        
+        
+        .offers-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+        
+        .offers-info i {
+            margin-right: 0.5rem;
+            color: #ef4444;
+        }
+        
+        /* Selection Sections */
+        .selection-section {
+            margin-bottom: 2rem;
+        }
+        
+        
+        
+        .selection-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 1rem;
+        }
+        
+        .selection-title .highlight {
+            color: #ef4444;
+            border-bottom: 2px solid #ef4444;
+        }
+        
+        .selection-options {
+            display: flex;
+            gap: 0.75rem;
+            flex-wrap: wrap;
+        }
+        
+        .storage-option {
+            padding: 0.5rem 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            background: white;
+            color: #6b7280;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 60px;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        
+        .storage-option:hover {
+            border-color: #ef4444;
+            color: #ef4444;
+        }
+        
+        .storage-option.selected {
+            border-color: #ef4444;
+            background: #ef4444;
+            color: white;
+        }
+        
+        .color-options {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .color-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            padding: 0.5rem;
+            border-radius: 6px;
+            border: 1px solid #e5e7eb;
+            background: white;
+        }
+        
+        .color-option:hover {
+            background: #f8f9fa;
+        }
+        
+        .color-option.selected {
+            background: #f8f9fa;
+            border-color: #ef4444;
+        }
+        
+        .color-swatch {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 3px solid #e5e7eb;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .color-option.selected .color-swatch {
+            border-color: #ef4444;
+            border-width: 3px;
+        }
+        
+        .color-label {
+            font-size: 0.8rem;
+            color: #6b7280;
+            text-align: center;
+            font-weight: 500;
+            line-height: 1.2;
+        }
+        
+        .color-name-line1 {
+            font-size: 0.75rem;
+            margin-bottom: 0.1rem;
+        }
+        
+        .color-name-line2 {
+            font-size: 0.7rem;
+        }
+        
+        .color-option.selected .color-label {
+            color: #ef4444;
+            font-weight: 600;
+        }
+        
+        .product-actions {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .btn-compare {
+            background: #10b981;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 600;
+            flex: 0 0 auto;
+            color: white;
+            font-size: 0.9rem;
+            min-width: 140px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        
+        .btn-compare:hover {
+            background: #059669;
+        }
+        
+        .btn-wishlist {
+            background: #ef4444;
+            border: none;
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            font-weight: 600;
+            flex: 0 0 auto;
+            font-size: 0.9rem;
+            min-width: 140px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        
+        .btn-wishlist:hover {
+            background: #dc2626;
+        }
+        
+        .description-section {
+            margin-bottom: 2rem;
+        }
+        
+        .description-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 1rem;
+        }
+        
+        .product-description {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 12px;
+            color: #374151;
+            line-height: 1.6;
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        
+        .specifications-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+        
+        
+        .specs-container {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        
+        
+        .spec-category {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+        
+        .spec-category h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #ef4444;
+            padding-bottom: 0.5rem;
+        }
+        
+        .spec-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+        
+        .spec-item:last-child {
+            border-bottom: none;
+        }
+        
+        .spec-label {
+            font-weight: 500;
+            color: #374151;
+        }
+        
+        .spec-value {
+            color: #6b7280;
+            text-align: right;
+        }
+        
+        /* Enhanced specification styles */
+        .features-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.5rem 0;
+            color: #1f2937 !important;
+        }
+        
+        .feature-item span {
+            color: #1f2937 !important;
+        }
+        
+        .feature-item i {
+            color: #1f2937;
+            font-size: 0.9rem;
+            width: 16px;
+        }
+        
+        .array-specs {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .array-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.25rem 0;
+            color: #1f2937 !important;
+        }
+        
+        .array-item span {
+            color: #1f2937 !important;
+        }
+        
+        .array-item i {
+            color: #1f2937;
+            font-size: 0.6rem;
+            width: 12px;
+        }
+        
+        .camera-specs .camera-section {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #ef4444;
+        }
+        
+        .camera-specs .camera-section h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 0.75rem;
+            border-bottom: 1px solid #e5e7eb;
+            padding-bottom: 0.5rem;
+        }
+        
+        
+        .connectivity-specs .spec-item {
+            border-left: 3px solid #10b981;
+            padding-left: 1rem;
+        }
+        
+        .network-specs .spec-item {
+            border-left: 3px solid #3b82f6;
+            padding-left: 1rem;
+        }
+        
+        .display-specs .spec-item {
+            border-left: 3px solid #8b5cf6;
+            padding-left: 1rem;
+        }
+        
+        .spec-category h3 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .spec-category h3 i {
+            color: #ef4444;
+            font-size: 1.1rem;
+        }
+        
+        .offers-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .offer-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .offer-retailer {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        
+        .retailer-info h4 {
+            margin: 0;
+            font-size: 1.1rem;
+            color: #1f2937;
+        }
+        
+        .retailer-info p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #6b7280;
+        }
+        
+        .sale-ends {
+            margin: 0.25rem 0 0 0 !important;
+            font-size: 0.8rem !important;
+            color: #ef4444 !important;
+            font-weight: 500;
+        }
+        
+        .sale-ends i {
+            margin-right: 0.25rem;
+        }
+        
+        .offer-price {
+            text-align: right;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .offer-price .price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #10b981;
+        }
+        
+        .offer-price .original-price {
+            font-size: 1rem;
+            color: #6b7280;
+            text-decoration: line-through;
+        }
+        
+        
+        .offer-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .btn-visit {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .btn-visit:hover {
+            background: #059669;
+        }
+        
+        /* Price History Styles */
+        .price-history-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .price-history-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .sort-by-section {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .sort-by-label {
+            font-size: 0.9rem;
+            color: #6b7280;
+            font-weight: 500;
+            margin: 0;
+        }
+        
+        .sort-by-dropdown {
+            padding: 0.5rem 0.75rem;
+            border: 1px solid #3b82f6;
+            border-radius: 6px;
+            background: white;
+            color: #374151;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            outline: none;
+            transition: all 0.2s ease;
+            min-width: 120px;
+        }
+        
+        .sort-by-dropdown:hover {
+            border-color: #2563eb;
+        }
+        
+        .sort-by-dropdown:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.1);
+        }
+        
+        .price-stats {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        
+        .stat-label {
+            font-size: 0.8rem;
+            color: #6b7280;
+            margin-bottom: 0.25rem;
+            font-weight: 500;
+        }
+        
+        .stat-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+        
+        .stat-value.current-price {
+            color: #10b981;
+        }
+        
+        .stat-value.lowest-price {
+            color: #3b82f6;
+        }
+        
+        .stat-value.highest-price {
+            color: #ef4444;
+        }
+        
+        .price-chart-container {
+            position: relative;
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            overflow-x: auto;
+            min-height: 300px;
+        }
+        
+        .price-chart-container canvas {
+            max-width: 100%;
+            height: auto;
+            min-height: 250px;
+        }
+        
+        .price-legend {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            color: #374151;
+        }
+        
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        
+        .legend-color.low-price {
+            background: #10b981;
+        }
+        
+        .legend-color.high-price {
+            background: #ef4444;
+        }
+
+        @media (max-width: 768px) {
+            .product-title {
+                font-size: 2rem;
+            }
+            
+            .product-actions {
+                flex-direction: row;
+                justify-content: center;
+                gap: 0.75rem;
+            }
+            
+            .btn-compare,
+            .btn-wishlist {
+                padding: 0.4rem 0.8rem !important;
+                font-size: 0.8rem !important;
+                min-width: 100px !important;
+                width: auto !important;
+                flex: 0 0 auto !important;
+                max-width: 120px !important;
+            }
+            
+            
+            .color-options {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                grid-template-rows: 1fr 1fr;
+                gap: 0.75rem;
+                max-width: 200px;
+                margin: 0 auto;
+            }
+            
+            .offer-item {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+            
+            .offer-price {
+                text-align: center;
+                justify-content: center;
+                gap: 0.25rem;
+            }
+            
+            .price-history-controls {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 1.5rem;
+            }
+            
+            .sort-by-section {
+                justify-content: center;
+                margin-bottom: 1rem;
+            }
+            
+            .sort-by-dropdown {
+                min-width: 140px;
+                font-size: 0.85rem;
+                padding: 0.4rem 0.6rem;
+            }
+            
+            .price-stats {
+                justify-content: space-between;
+                gap: 0.5rem;
+                flex-wrap: wrap;
+            }
+            
+            .stat-item {
+                flex: 1;
+                min-width: 80px;
+                text-align: center;
+            }
+            
+            .stat-label {
+                font-size: 0.75rem;
+                margin-bottom: 0.2rem;
+            }
+            
+            .stat-value {
+                font-size: 1rem;
+                font-weight: 600;
+            }
+            
+            .price-chart-container {
+                padding: 0.75rem;
+                margin-bottom: 1rem;
+                min-height: 250px;
+                overflow-x: scroll;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            .price-chart-container canvas {
+                min-height: 200px;
+                width: 100% !important;
+                height: auto !important;
+            }
+            
+            .price-legend {
+                flex-direction: row;
+                gap: 1rem;
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            .legend-item {
+                font-size: 0.8rem;
+            }
+            
+            .legend-color {
+                width: 10px;
+                height: 10px;
+            }
+        }
+        
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <!-- Mobile Toggle Button - Left Corner -->
+                <div class="col-auto mobile-tablet-only">
+                    <button class="sidebar-toggle" aria-label="Open menu">☰</button>
+                </div>
+                
+                <div class="col-auto">
+                    <div class="logo">
+                        <img src="assets/logo.jpg" alt="CompareHubPrices" class="logo-img">
+                    </div>
+                </div>
+                
+                <!-- Categories Dropdown - Desktop Only -->
+                <div class="col-auto desktop-only">
+                    <div class="categories-dropdown">
+                        <a href="#categories" class="header-link">Categories <i class="fas fa-chevron-down"></i></a>
+                        <div class="categories-menu">
+                            <div class="categories-column">
+                                <h4>Product Categories</h4>
+                                <a href="#smartphones-tablets" class="category-item" data-category="smartphones-tablets">
+                                    Smartphones and Tablets
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                                <a href="#laptops-accessories" class="category-item" data-category="laptops-accessories">
+                                    Laptops and Accessories
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                                <a href="#wearables" class="category-item" data-category="wearables">
+                                    Wearables Devices
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                                <a href="#televisions" class="category-item" data-category="televisions">
+                                    Televisions & Streaming Devices
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                                <a href="#audio" class="category-item" data-category="audio">
+                                    Audio
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                                <a href="#gaming" class="category-item" data-category="gaming">
+                                    Gaming
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                                <a href="#networking" class="category-item" data-category="networking">
+                                    Wi-Fi & Networking
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                                <a href="#appliances" class="category-item" data-category="appliances">
+                                    Appliances
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                            </div>
+                            <div class="categories-column subcategories-column" id="subcategories-column">
+                                <h4 id="subcategory-title">Select a category</h4>
+                                <div id="subcategory-content">
+                                    <p>Hover over a category to see subcategories</p>
+                                </div>
+                            </div>
+                            <div class="categories-column sub-subcategories-column" id="sub-subcategories-column">
+                                <h4 id="sub-subcategory-title">Select a subcategory</h4>
+                                <div id="sub-subcategory-content">
+                                    <p>Hover over a subcategory to see more options</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Header Search -->
+                <div class="col desktop-only">
+                    <div class="header-search">
+                        <div class="search-wrapper">
+                            <div class="input-group">
+                                <input type="text" id="headerSearchInput" placeholder="Search products..." class="form-control search-input">
+                                <button type="button" class="btn btn-danger search-btn" onclick="performHeaderSearch()">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                            <!-- Desktop Search Suggestions Dropdown -->
+                            <div class="search-suggestions" id="headerSearchSuggestions">
+                                <div class="suggestions-content">
+                                    <!-- Suggestions will be populated here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Notification Buttons - Desktop Only -->
+                <div class="col-auto desktop-only">
+                    <div class="notification-buttons">
+                        <a href="#new-arrivals" class="header-link" onclick="showNewArrivals(); return false;">New Arrivals</a>
+                        <a href="#notifications" class="header-link" onclick="showNotifications(); return false;">Notifications</a>
+                        <a href="#local-business" class="header-link" onclick="showLocalBusiness(); return false;">Local Business</a>
+                        <a href="#" class="header-link" onclick="toggleLoginState(); return false;">Login</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile/Tablet Sidebar -->
+    <div class="mobile-sidebar" id="mobileSidebar">
+        <div class="sidebar-login" id="sidebarLogin">
+            <a href="#" class="login-btn" onclick="toggleLoginState(); return false;">
+                <i class="fas fa-sign-in-alt"></i>Login
+            </a>
+        </div>
+        <div class="sidebar-header">
+            <h3>Quick Access</h3>
+            <button class="sidebar-close" id="sidebarClose">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="sidebar-content">
+            <div class="sidebar-section">
+                <h4>Quick Access</h4>
+                <div class="quick-access-grid">
+                    <a href="#new-arrivals" class="quick-access-item new-arrivals">
+                        <div class="quick-access-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="quick-access-content">
+                            <span class="quick-access-title">New Arrivals</span>
+                            <span class="quick-access-subtitle">Latest products</span>
+                        </div>
+                        <div class="quick-access-badge new">NEW</div>
+                    </a>
+                    
+                    <a href="#notifications" class="quick-access-item notifications">
+                        <div class="quick-access-icon">
+                            <i class="fas fa-bell"></i>
+                        </div>
+                        <div class="quick-access-content">
+                            <span class="quick-access-title">Notifications</span>
+                            <span class="quick-access-subtitle">3 unread</span>
+                        </div>
+                        <div class="quick-access-badge count">3</div>
+                    </a>
+                    
+                    <a href="#local-business" class="quick-access-item local-business">
+                        <div class="quick-access-icon">
+                            <i class="fas fa-store"></i>
+                        </div>
+                        <div class="quick-access-content">
+                            <span class="quick-access-title">Local Business</span>
+                            <span class="quick-access-subtitle">Near you</span>
+                        </div>
+                    </a>
+                    
+                    <a href="#help" class="quick-access-item help">
+                        <div class="quick-access-icon">
+                            <i class="fas fa-question-circle"></i>
+                        </div>
+                        <div class="quick-access-content">
+                            <span class="quick-access-title">Help</span>
+                            <span class="quick-access-subtitle">Support center</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="sidebar-section">
+                <h4>Categories</h4>
+                <div class="category-search">
+                    <input type="text" placeholder="Search categories..." class="category-search-input" id="categorySearchInput">
+                    <i class="fas fa-search search-icon"></i>
+                </div>
+                <ul class="menu-items">
+                    <li class="item">
+                        <div class="submenu-item" onclick="toggleSubmenu(this)">
+                            <span>Smartphones and Tablets</span>
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                        <ul class="menu-items submenu">
+                            <li class="item"><a href="#smartphones">Smartphones</a></li>
+                            <li class="item"><a href="#tablets">Tablets</a></li>
+                            <li class="item"><a href="#accessories">Mobile Accessories</a></li>
+                        </ul>
+                    </li>
+                    <li class="item">
+                        <div class="submenu-item" onclick="toggleSubmenu(this)">
+                            <span>Wearables Devices</span>
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                        <ul class="menu-items submenu">
+                            <li class="item"><a href="#smartwatches">Smartwatches</a></li>
+                            <li class="item"><a href="#fitness-trackers">Fitness Trackers</a></li>
+                        </ul>
+                    </li>
+                    <li class="item">
+                        <div class="submenu-item" onclick="toggleSubmenu(this)">
+                            <span>Laptops and Accessories</span>
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                        <ul class="menu-items submenu">
+                            <li class="item"><a href="#laptops">Windows Laptops</a></li>
+                            <li class="item"><a href="#desktops">Macbooks</a></li>
+                            <li class="item"><a href="#monitors">Chromebooks</a></li>
+                            <li class="item"><a href="#keyboards">Accessories</a></li>
+                        </ul>
+                    </li>
+                    <li class="item">
+                        <div class="submenu-item" onclick="toggleSubmenu(this)">
+                            <span>Televisions & Streaming Devices</span>
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                        <ul class="menu-items submenu">
+                            <li class="item"><a href="#televisions">Televisions</a></li>
+                            <li class="item"><a href="#streaming">Streaming Devices</a></li>
+                        </ul>
+                    </li>
+                    <li class="item">
+                        <div class="submenu-item" onclick="toggleSubmenu(this)">
+                            <span>Audio</span>
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                        <ul class="menu-items submenu">
+                            <li class="item"><a href="#earbuds">Earbuds</a></li>
+                            <li class="item"><a href="#headphones">Headphones</a></li>
+                            <li class="item"><a href="#speakers">Bluetooth Speakers</a></li>
+                            <li class="item"><a href="#party-speakers">Party Speakers</a></li>
+                            <li class="item"><a href="#soundbars">Soundbars</a></li>
+                            <li class="item"><a href="#hifi">Hi-fi Systems</a></li>
+                        </ul>
+                    </li>
+                    <li class="item">
+                        <div class="submenu-item" onclick="toggleSubmenu(this)">
+                            <span>Gaming</span>
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                        <ul class="menu-items submenu">
+                            <li class="item"><a href="#consoles">Gaming Consoles</a></li>
+                            <li class="item"><a href="#controllers">Controllers</a></li>
+                            <li class="item"><a href="#gaming-accessories">Gaming Accessories</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sidebar Overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+    <!-- Notification Container -->
+    <div class="notification-container" id="notificationContainer"></div>
+
+
+
+    <!-- Login Modal -->
+    <div class="modal-overlay" id="loginModalOverlay">
+        <div class="login-modal" id="loginModal">
+            <div class="modal-header">
+                <div class="header-content">
+                    <h2>Welcome back</h2>
+                    <p class="header-subtitle">Sign in to your account</p>
+                </div>
+                <button class="modal-close" id="modalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="login-form" id="loginForm">
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                            <button type="button" class="password-toggle" id="passwordToggle">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-options">
+                        <label class="checkbox-wrapper">
+                            <input type="checkbox" id="rememberMe">
+                            <span class="checkmark"></span>
+                            Remember me
+                        </label>
+                        <a href="#" class="forgot-link" onclick="openForgotModal(); closeLoginModal(); return false;">Forgot password?</a>
+                    </div>
+                    <button type="submit" class="login-submit-btn">
+                        <span>Sign In</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </form>
+                <div class="modal-divider">
+                    <span>or</span>
+                </div>
+                <div class="social-login">
+                    <button class="gsi-material-button">
+                        <div class="gsi-material-button-state"></div>
+                        <div class="gsi-material-button-content-wrapper">
+                            <div class="gsi-material-button-icon">
+                                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" xmlns:xlink="http://www.w3.org/1999/xlink" style="display: block;">
+                                    <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path>
+                                    <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"></path>
+                                    <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"></path>
+                                    <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"></path>
+                                    <path fill="none" d="M0 0h48v48H0z"></path>
+                                </svg>
+                            </div>
+                            <span class="gsi-material-button-contents">Sign in with Google</span>
+                            <span style="display: none;">Sign in with Google</span>
+                        </div>
+                    </button>
+                </div>
+                <div class="modal-footer">
+                    <p>Don't have an account? <a href="#" class="register-link" onclick="openRegisterModal(); closeLoginModal(); return false;">Sign up</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal-overlay" id="registerModalOverlay">
+        <div class="register-modal" id="registerModal">
+            <div class="modal-header">
+                <div class="header-content">
+                    <h2>Create Account</h2>
+                    <p class="header-subtitle">Join us today</p>
+                </div>
+                <button class="modal-close" id="registerModalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="register-form" id="registerForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">First Name</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-user"></i>
+                                <input type="text" id="firstName" name="firstName" placeholder="Enter your first name" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-user"></i>
+                                <input type="text" id="lastName" name="lastName" placeholder="Enter your last name" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerEmail">Email Address</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="registerEmail" name="email" placeholder="Enter your email" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="registerPassword">Password</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="registerPassword" name="password" placeholder="Create a password" required>
+                            <button type="button" class="password-toggle" id="registerPasswordToggle">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <div class="password-requirements" id="passwordRequirements">
+                            <p class="requirements-title">Password Requirements:</p>
+                            <ul class="requirements-list">
+                                <li class="requirement" data-requirement="length">
+                                    <i class="fas fa-times"></i>
+                                    <span>At least 8 characters</span>
+                                </li>
+                                <li class="requirement" data-requirement="uppercase">
+                                    <i class="fas fa-times"></i>
+                                    <span>One uppercase letter</span>
+                                </li>
+                                <li class="requirement" data-requirement="lowercase">
+                                    <i class="fas fa-times"></i>
+                                    <span>One lowercase letter</span>
+                                </li>
+                                <li class="requirement" data-requirement="number">
+                                    <i class="fas fa-times"></i>
+                                    <span>One number</span>
+                                </li>
+                                <li class="requirement" data-requirement="special">
+                                    <i class="fas fa-times"></i>
+                                    <span>One special character</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" required>
+                            <button type="button" class="password-toggle" id="confirmPasswordToggle">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <div class="password-match" id="passwordMatch">
+                            <i class="fas fa-times"></i>
+                            <span>Passwords do not match</span>
+                        </div>
+                    </div>
+                    <div class="form-options">
+                        <label class="checkbox-wrapper">
+                            <input type="checkbox" id="agreeTerms" required>
+                            <span class="checkmark"></span>
+                            I agree to the <a href="#terms" class="terms-link">Terms of Service</a> and <a href="#privacy" class="terms-link">Privacy Policy</a>
+                        </label>
+                    </div>
+                    <button type="submit" class="register-submit-btn">
+                        <span>Create Account</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </form>
+                <div class="modal-divider">
+                    <span>or</span>
+                </div>
+                <div class="social-login">
+                    <button class="gsi-material-button">
+                        <div class="gsi-material-button-state"></div>
+                        <div class="gsi-material-button-content-wrapper">
+                            <div class="gsi-material-button-icon">
+                                <svg version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" xmlns:xlink="http://www.w3.org/1999/xlink" style="display: block;">
+                                    <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path>
+                                    <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"></path>
+                                    <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"></path>
+                                    <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"></path>
+                                    <path fill="none" d="M0 0h48v48H0z"></path>
+                                </svg>
+                            </div>
+                            <span class="gsi-material-button-contents">Sign up with Google</span>
+                            <span style="display: none;">Sign up with Google</span>
+                        </div>
+                    </button>
+                </div>
+                <div class="modal-footer">
+                    <p>Already have an account? <a href="#" class="login-link" onclick="openLoginModal(); closeRegisterModal(); return false;">Sign in</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- OTP Confirmation Modal -->
+    <div class="modal-overlay" id="otpModalOverlay">
+        <div class="otp-modal" id="otpModal">
+            <div class="modal-header">
+                <div class="header-content">
+                    <h2>Verify Your Email</h2>
+                    <p class="header-subtitle">Enter the verification code sent to your email</p>
+                </div>
+                <button class="modal-close" id="otpModalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="otp-container">
+                    <div class="otp-icon">
+                        <i class="fas fa-envelope-open"></i>
+                    </div>
+                    <p class="otp-description">
+                        We've sent a 6-digit verification code to<br>
+                        <strong id="userEmail">user@example.com</strong>
+                    </p>
+                    
+                    <form class="otp-form" id="otpForm">
+                        <div class="otp-inputs">
+                            <input type="text" class="otp-input" maxlength="1" data-index="0" required>
+                            <input type="text" class="otp-input" maxlength="1" data-index="1" required>
+                            <input type="text" class="otp-input" maxlength="1" data-index="2" required>
+                            <input type="text" class="otp-input" maxlength="1" data-index="3" required>
+                            <input type="text" class="otp-input" maxlength="1" data-index="4" required>
+                            <input type="text" class="otp-input" maxlength="1" data-index="5" required>
+                        </div>
+                        
+                        <div class="otp-actions">
+                            <button type="submit" class="verify-btn">
+                                <span>Verify Code</span>
+                                <i class="fas fa-check"></i>
+                            </button>
+                        </div>
+                    </form>
+                    
+                    <div class="otp-footer">
+                        <p class="resend-text">
+                            Didn't receive the code? 
+                            <a href="#" class="resend-link" id="resendLink">Resend</a>
+                        </p>
+                        <div class="countdown" id="countdown">
+                            <span>Resend in <span id="countdownTimer">60</span>s</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Forgot Password Modal -->
+    <div class="modal-overlay" id="forgotModalOverlay">
+        <div class="forgot-modal" id="forgotModal">
+            <div class="modal-header">
+                <div class="header-content">
+                    <h2>Forgot Password</h2>
+                    <p class="header-subtitle">Enter your email to reset your password</p>
+                </div>
+                <button class="modal-close" id="forgotModalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="forgot-container">
+                    <div class="forgot-icon">
+                        <i class="fas fa-key"></i>
+                    </div>
+                    <p class="forgot-description">
+                        Don't worry! Enter your email address and we'll send you a verification code to reset your password.
+                    </p>
+                    
+                    <form class="forgot-form" id="forgotForm">
+                        <div class="form-group">
+                            <label for="forgotEmail">Email Address</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-envelope"></i>
+                                <input type="email" id="forgotEmail" name="email" placeholder="Enter your email address" required>
+                            </div>
+                        </div>
+                        
+                        <div class="forgot-actions">
+                            <button type="submit" class="send-code-btn">
+                                <span>Send Verification Code</span>
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </form>
+                    
+                    <div class="forgot-footer">
+                        <p>Remember your password? <a href="#" class="back-to-login" onclick="openLoginModal(); closeForgotModal(); return false;">Back to Login</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Password Reset Modal -->
+    <div class="modal-overlay" id="resetModalOverlay">
+        <div class="reset-modal" id="resetModal">
+            <div class="modal-header">
+                <div class="header-content">
+                    <h2>Reset Password</h2>
+                    <p class="header-subtitle">Enter verification code and new password</p>
+                </div>
+                <button class="modal-close" id="resetModalClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="reset-container">
+                    <div class="reset-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <p class="reset-description">
+                        We've sent a 6-digit verification code to<br>
+                        <strong id="resetUserEmail">user@example.com</strong>
+                    </p>
+                    
+                    <form class="reset-form" id="resetForm">
+                        <div class="form-group">
+                            <label for="resetOtp">Verification Code</label>
+                            <div class="otp-inputs">
+                                <input type="text" class="otp-input" maxlength="1" data-index="0" required>
+                                <input type="text" class="otp-input" maxlength="1" data-index="1" required>
+                                <input type="text" class="otp-input" maxlength="1" data-index="2" required>
+                                <input type="text" class="otp-input" maxlength="1" data-index="3" required>
+                                <input type="text" class="otp-input" maxlength="1" data-index="4" required>
+                                <input type="text" class="otp-input" maxlength="1" data-index="5" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="newPassword">New Password</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" id="newPassword" name="newPassword" placeholder="Enter your new password" required>
+                                <button type="button" class="password-toggle" id="newPasswordToggle">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                            <div class="password-requirements" id="resetPasswordRequirements">
+                                <p class="requirements-title">Password Requirements:</p>
+                                <ul class="requirements-list">
+                                    <li class="requirement" data-requirement="length">
+                                        <i class="fas fa-times"></i>
+                                        <span>At least 8 characters</span>
+                                    </li>
+                                    <li class="requirement" data-requirement="uppercase">
+                                        <i class="fas fa-times"></i>
+                                        <span>One uppercase letter</span>
+                                    </li>
+                                    <li class="requirement" data-requirement="lowercase">
+                                        <i class="fas fa-times"></i>
+                                        <span>One lowercase letter</span>
+                                    </li>
+                                    <li class="requirement" data-requirement="number">
+                                        <i class="fas fa-times"></i>
+                                        <span>One number</span>
+                                    </li>
+                                    <li class="requirement" data-requirement="special">
+                                        <i class="fas fa-times"></i>
+                                        <span>One special character</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="confirmNewPassword">Confirm New Password</label>
+                            <div class="input-wrapper">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" id="confirmNewPassword" name="confirmNewPassword" placeholder="Confirm your new password" required>
+                                <button type="button" class="password-toggle" id="confirmNewPasswordToggle">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                            <div class="password-match" id="resetPasswordMatch">
+                                <i class="fas fa-times"></i>
+                                <span>Passwords do not match</span>
+                            </div>
+                        </div>
+                        
+                        <div class="reset-actions">
+                            <button type="submit" class="reset-password-btn">
+                                <span>Reset Password</span>
+                                <i class="fas fa-check"></i>
+                            </button>
+                        </div>
+                    </form>
+                    
+                    <div class="reset-footer">
+                        <p class="resend-text">
+                            Didn't receive the code? 
+                            <a href="#" class="resend-link" id="resetResendLink">Resend</a>
+                        </p>
+                        <div class="countdown" id="resetCountdown">
+                            <span>Resend in <span id="resetCountdownTimer">60</span>s</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mobile-search-container mobile-tablet-only">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
+                    <div class="search-wrapper">
+                        <div class="input-group">
+                            <input type="text" id="mobileSearchInput" placeholder="Search for products, brands, or items..." class="form-control mobile-search-input">
+                            <button type="button" class="btn btn-danger mobile-search-btn" onclick="performMobileSearch()">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                        <!-- Search Suggestions Dropdown -->
+                        <div class="search-suggestions" id="mobileSearchSuggestions">
+                            <div class="suggestions-content">
+                                <!-- Suggestions will be populated here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <main class="main">
+        <div class="container">
+            <!-- Product Details Section -->
+            <section class="product-details-section">
+                <div class="row">
+                    <!-- Product Image and Basic Info -->
+                    <div class="col-lg-6 col-md-12">
+                        <div class="product-breadcrumb">
+                            <a href="smartphones.html">Smartphones</a> 
+                            <i class="fas fa-chevron-right"></i>
+                            <span id="productBrand">Brand</span>
+                        </div>
+                        
+                        <div class="product-image-container">
+                            <img id="productImage" src="" alt="Product Image" class="product-main-image">
+                        </div>
+                    </div>
+                    
+                    <!-- Product Information -->
+                    <div class="col-lg-6 col-md-12">
+                        <div class="product-info">
+                            
+                            <h1 class="product-title" id="productTitle">Product Title</h1>
+                            <p class="product-subtitle" id="productSubtitle">Product Subtitle</p>
+                            
+                            <!-- Storage Selection -->
+                            <div class="selection-section">
+                                <h3 class="selection-title">Choose <span class="highlight">Storage</span></h3>
+                                <div class="selection-options" id="storageOptions">
+                                    <!-- Storage options will be populated dynamically -->
+                                </div>
+                            </div>
+                            
+                            <!-- Color Selection -->
+                            <div class="selection-section">
+                                <h3 class="selection-title">Choose <span class="highlight">Color</span></h3>
+                                <div class="color-options" id="colorOptions">
+                                    <!-- Color options will be populated dynamically -->
+                                </div>
+                            </div>
+                            
+                            <div class="product-actions">
+                                <button class="btn btn-compare" onclick="compareProduct()">
+                                    Compare
+                                </button>
+                                <button class="btn btn-wishlist" onclick="addToWishlist()">
+                                    Add to Wishlist
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Available Offers -->
+                <div class="row mt-5">
+                    <div class="col-12">
+                        <div class="offers-section">
+                            <h2 class="section-title">Available Offers</h2>
+                            <div class="offers-container" id="offersContainer">
+                                <!-- Offers will be loaded dynamically -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product Description -->
+                <div class="row mt-5">
+                    <div class="col-12">
+                        <div class="offers-section">
+                            <h2 class="section-title">Product Description</h2>
+                            <div class="product-description" id="productDescription">
+                                <!-- Description will be loaded dynamically -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product Specifications -->
+                <div class="row mt-5">
+                    <div class="col-12">
+                        <div class="specifications-section">
+                            <h2 class="section-title">Specifications</h2>
+                            <div class="specs-container" id="specificationsContainer">
+                                <!-- Specifications will be loaded dynamically -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Price History Section -->
+                <div class="row mt-5">
+                    <div class="col-12">
+                        <div class="price-history-section">
+                            <h2 class="section-title">Price History</h2>
+                            <div class="price-history-controls">
+                                <div class="sort-by-section">
+                                    <label class="sort-by-label">Sort by:</label>
+                                    <select class="sort-by-dropdown" id="timePeriodSelect" onchange="switchTimePeriod(this.value)">
+                                        <option value="30d">30 Days</option>
+                                        <option value="3m">3 Months</option>
+                                        <option value="6m" selected>6 Months</option>
+                                        <option value="12m">12 Months</option>
+                                    </select>
+                                </div>
+                                <div class="price-stats">
+                                    <div class="stat-item">
+                                        <span class="stat-label">Current Price</span>
+                                        <span class="stat-value current-price" id="currentPrice">R 0</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="stat-label">Lowest Price</span>
+                                        <span class="stat-value lowest-price" id="lowestPrice">R 0</span>
+                                    </div>
+                                    <div class="stat-item">
+                                        <span class="stat-label">Highest Price</span>
+                                        <span class="stat-value highest-price" id="highestPrice">R 0</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="price-chart-container">
+                                <canvas id="priceChart" width="800" height="400"></canvas>
+                            </div>
+                            <div class="price-legend">
+                                <div class="legend-item">
+                                    <div class="legend-color low-price"></div>
+                                    <span>Low Price</span>
+                                </div>
+                                <div class="legend-item">
+                                    <div class="legend-color high-price"></div>
+                                    <span>High Price</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About CompareHubPrices</h3>
+                <ul>
+                    <li><a href="about-us.html">About Us</a></li>
+                    <li><a href="articles.html">Blog</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Help & Support</h3>
+                <ul>
+                    <li><a href="contact-us.html">Contact Us</a></li>
+                    <li><a href="FAQs.html">FAQs</a></li>
+                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                    <li><a href="Terms-of-Service.html">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Connect With Us</h3>
+                <div class="social-icons">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="#" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                </div>
+                <div class="newsletter-section">
+                    <h4>Get the Best Deals in Your Inbox</h4>
+                    <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
+                        <input type="email" placeholder="Enter your email address" required aria-label="Email address for newsletter">
+                        <button type="submit"><i class="fas fa-paper-plane"></i> Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 CompareHub Prices. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="assets/scripts/device-detection.js"></script>
+    <script src="assets/scripts/script.js"></script>
+    <script src="assets/scripts/search.js"></script>
+    <script src="assets/scripts/sidebar-header.js"></script>
+    <script src="assets/scripts/sidebar-mobile.js"></script>
+    <script src="assets/scripts/login-modal.js"></script>
+    <script src="assets/scripts/register-modal.js"></script>
+    <script src="assets/scripts/otp-modal.js"></script>
+    <script src="assets/scripts/forgot-password-modal.js"></script>
+    <script src="assets/scripts/notifications.js"></script>
+    
+    <!-- Product Info JavaScript -->
+    <script>
+        // API Configuration
+        const API_BASE_URL = 'https://xf9zlapr5e.execute-api.af-south-1.amazonaws.com';
+        let currentProduct = null;
+        let priceChart = null;
+        let currentTimePeriod = '6m';
+        
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            loadProductInfo();
+            initializePriceChart();
+        });
+        
+        // Load product information from URL parameters or API
+        async function loadProductInfo() {
+            try {
+                // Get product ID from URL parameters
+                const urlParams = new URLSearchParams(window.location.search);
+                const productId = urlParams.get('id');
+                
+                if (!productId) {
+                    showError('Product ID not found in URL');
+                    return;
+                }
+                
+                // Fetch product data from API using category -smartphones
+                const response = await fetch(`${API_BASE_URL}/smartphones`);
+                if (!response.ok) {
+                    throw new Error('Failed to fetch product data');
+                }
+                
+                const data = await response.json();
+                const product = data.find(p => p.product_id === productId);
+                
+                if (!product) {
+                    showError('Product not found');
+                    return;
+                }
+                
+                currentProduct = product;
+                displayProductInfo(product);
+                
+            } catch (error) {
+                console.error('Error loading product:', error);
+                showError('Failed to load product information');
+            }
+        }
+        
+        // Display product information
+        function displayProductInfo(product) {
+            // Update page title
+            document.title = `${product.brand} ${product.model} - CompareHubPrices`;
+            
+            // Update product image
+            const productImage = document.getElementById('productImage');
+            productImage.src = product.imageUrl;
+            productImage.alt = `${product.brand} ${product.model}`;
+            productImage.onerror = function() {
+                this.src = 'assets/logo-placeholder.txt';
+            };
+            
+            // Update breadcrumb
+            document.getElementById('productBrand').textContent = product.brand;
+            
+            // Update product title and subtitle
+            document.getElementById('productTitle').textContent = `${product.brand} ${product.model}`;
+            document.getElementById('productSubtitle').textContent = product.model;
+            
+            // Update storage and color options
+            updateStorageOptions(product);
+            updateColorOptions(product);
+            
+            // Update description
+            updateDescription(product);
+            
+            // Update specifications
+            updateSpecifications(product);
+            
+            // Update offers
+            updateOffers(product.offers || []);
+            
+        }
+        
+        
+        // Update storage options
+        function updateStorageOptions(product) {
+            const storageContainer = document.getElementById('storageOptions');
+            
+            // Extract storage from product specs or use default options
+            const storage = product.specs?.Performance?.Storage || '512GB';
+            const availableStorages = ['256GB', '512GB', '1TB'];
+            
+            const storageHTML = availableStorages.map(storageOption => {
+                const isSelected = storage.includes(storageOption.replace('GB', '').replace('TB', ''));
+                return `
+                    <div class="storage-option ${isSelected ? 'selected' : ''}" 
+                         onclick="selectStorage('${storageOption}')">
+                        ${storageOption}
+                    </div>
+                `;
+            }).join('');
+            
+            storageContainer.innerHTML = storageHTML;
+        }
+        
+        // Update color options
+        function updateColorOptions(product) {
+            const colorContainer = document.getElementById('colorOptions');
+            
+            // Extract color from product or use default options
+            const productColor = product.color || 'Titanium Black';
+            const availableColors = [
+                { name: 'Titanium Black', value: '#1f2937' },
+                { name: 'Titanium Silverblue', value: '#60a5fa' },
+                { name: 'Titanium Gray', value: '#6b7280' },
+                { name: 'Titanium Whitesilver', value: '#f3f4f6' }
+            ];
+            
+            const colorHTML = availableColors.map(color => {
+                const isSelected = productColor.toLowerCase().includes(color.name.toLowerCase().split(' ')[1]);
+                const nameParts = color.name.split(' ');
+                const firstWord = nameParts[0];
+                const secondWord = nameParts.slice(1).join(' ');
+                return `
+                    <div class="color-option ${isSelected ? 'selected' : ''}" 
+                         onclick="selectColor('${color.name}', '${color.value}')">
+                        <div class="color-swatch" style="background-color: ${color.value}"></div>
+                        <div class="color-label">
+                            <div class="color-name-line1">${firstWord}</div>
+                            <div class="color-name-line2">${secondWord}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            colorContainer.innerHTML = colorHTML;
+        }
+        
+        // Storage selection handler
+        function selectStorage(storage) {
+            // Remove selected class from all storage options
+            document.querySelectorAll('.storage-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // Add selected class to clicked option
+            event.target.classList.add('selected');
+            
+            // Update product image or price based on storage selection
+            console.log('Selected storage:', storage);
+        }
+        
+        // Color selection handler
+        function selectColor(colorName, colorValue) {
+            // Remove selected class from all color options
+            document.querySelectorAll('.color-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            
+            // Add selected class to clicked option
+            event.target.closest('.color-option').classList.add('selected');
+            
+            // Update product image based on color selection
+            console.log('Selected color:', colorName, colorValue);
+        }
+        
+        // Get best offer from offers array
+        function getBestOffer(offers) {
+            if (!offers || offers.length === 0) {
+                return { price: 0, originalPrice: 0 };
+            }
+            
+            return offers.reduce((best, offer) => {
+                return offer.price < best.price ? offer : best;
+            }, offers[0]);
+        }
+        
+        // Update product description
+        function updateDescription(product) {
+            const descriptionContainer = document.getElementById('productDescription');
+            
+            let description = product.description || '';
+            
+            // If no description, create one from specs
+            if (!description && product.specs) {
+                const storage = product.specs.Performance?.Storage || 'N/A';
+                const ram = product.specs.Performance?.RAM || 'N/A';
+                const display = product.specs.Display?.Size || 'N/A';
+                
+                description = `The ${product.brand} ${product.model} features ${storage} storage, ${ram} RAM, and a ${display} display. This smartphone offers excellent performance and modern features for everyday use.`;
+            }
+            
+            descriptionContainer.innerHTML = `<p>${description}</p>`;
+        }
+        
+        // Update specifications
+        function updateSpecifications(product) {
+            const specsContainer = document.getElementById('specificationsContainer');
+            
+            if (!product.specs) {
+                specsContainer.innerHTML = '<p class="text-muted">No specifications available</p>';
+                return;
+            }
+            
+            let specsHTML = '';
+            
+            // Define specification categories in order of importance
+            const specOrder = [
+                'Performance', 'Display', 'Camera', 'Battery', 'Connectivity', 
+                'Network', 'Security', 'Audio', 'Dimensions', 'Durability', 
+                'Media', 'Os', 'Sensors', 'AdditionalFeatures'
+            ];
+            
+            // Process each category in vertical list order
+            specOrder.forEach(category => {
+                if (product.specs[category]) {
+                    specsHTML += generateSpecCategory(category, product.specs[category]);
+                }
+            });
+            
+            // Add any remaining categories not in the predefined order
+            Object.entries(product.specs).forEach(([category, specs]) => {
+                if (!specOrder.includes(category) && specs && typeof specs === 'object') {
+                    specsHTML += generateSpecCategory(category, specs);
+                }
+            });
+            
+            specsContainer.innerHTML = specsHTML || '<p class="text-muted">No specifications available</p>';
+        }
+        
+        // Generate specification category HTML
+        function generateSpecCategory(category, specs) {
+            let categoryHTML = '';
+            
+            // Check if specs has meaningful data before displaying
+            if (!hasValidSpecData(specs)) {
+                return ''; // Return empty string if no valid data
+            }
+            
+            // Handle special cases for better display
+            if (category === 'AdditionalFeatures' && Array.isArray(specs) && specs.length > 0) {
+                categoryHTML = `
+                        <div class="spec-category">
+                        <h3><i class="fas fa-star"></i> ${category}</h3>
+                        <div class="features-list">
+                            ${specs.map(feature => `
+                                <div class="feature-item">
+                                    <i class="fas fa-check-circle"></i>
+                                    <span>${feature}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            } else if (category === 'Camera' && typeof specs === 'object') {
+                categoryHTML = generateCameraSpecs(specs);
+            } else if (category === 'Connectivity' && typeof specs === 'object') {
+                categoryHTML = generateConnectivitySpecs(specs);
+            } else if (category === 'Network' && typeof specs === 'object') {
+                categoryHTML = generateNetworkSpecs(specs);
+            } else if (category === 'Display' && typeof specs === 'object' && specs.Main) {
+                categoryHTML = generateDisplaySpecs(specs);
+            } else if (Array.isArray(specs) && specs.length > 0) {
+                // Handle array specifications (like Sensors)
+                categoryHTML = `
+                    <div class="spec-category">
+                        <h3><i class="fas fa-cog"></i> ${category}</h3>
+                        <div class="array-specs">
+                            ${specs.map(item => `
+                                <div class="array-item">
+                                    <i class="fas fa-circle"></i>
+                                    <span>${item}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            } else if (typeof specs === 'object' && Object.keys(specs).length > 0) {
+                // Standard object specifications - only show if has properties
+                const validEntries = Object.entries(specs).filter(([key, value]) => 
+                    value !== null && value !== undefined && value !== '' && 
+                    !(Array.isArray(value) && value.length === 0)
+                );
+                
+                if (validEntries.length > 0) {
+                    categoryHTML = `
+                        <div class="spec-category">
+                            <h3><i class="fas fa-info-circle"></i> ${category}</h3>
+                            ${validEntries.map(([key, value]) => `
+                                <div class="spec-item">
+                                    <span class="spec-label">${formatSpecLabel(key)}</span>
+                                    <span class="spec-value">${formatSpecValue(value)}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                }
+            }
+            
+            return categoryHTML;
+        }
+        
+        // Helper function to check if specs data is valid and meaningful
+        function hasValidSpecData(specs) {
+            if (!specs) return false;
+            
+            if (Array.isArray(specs)) {
+                return specs.length > 0 && specs.some(item => 
+                    item !== null && item !== undefined && item !== ''
+                );
+            }
+            
+            if (typeof specs === 'object') {
+                const validEntries = Object.entries(specs).filter(([key, value]) => 
+                    value !== null && value !== undefined && value !== '' && 
+                    !(Array.isArray(value) && value.length === 0)
+                );
+                return validEntries.length > 0;
+            }
+            
+            return specs !== null && specs !== undefined && specs !== '';
+        }
+        
+        // Generate camera specifications with enhanced display
+        function generateCameraSpecs(cameraSpecs) {
+            // Check if camera specs has any meaningful data
+            if (!hasValidSpecData(cameraSpecs)) {
+                return '';
+            }
+            
+            let cameraHTML = `
+                <div class="spec-category camera-specs">
+                    <h3><i class="fas fa-camera"></i> Camera</h3>
+            `;
+            
+            // Main camera specifications
+            if (cameraSpecs.Rear_Main) {
+                cameraHTML += `
+                    <div class="camera-section">
+                        <h4>Main Camera</h4>
+                        <div class="spec-item">
+                            <span class="spec-label">Primary Sensor</span>
+                            <span class="spec-value">${cameraSpecs.Rear_Main}</span>
+                        </div>
+                `;
+                
+                if (cameraSpecs.Rear_Ultra_Wide) {
+                    cameraHTML += `
+                        <div class="spec-item">
+                            <span class="spec-label">Ultra Wide</span>
+                            <span class="spec-value">${cameraSpecs.Rear_Ultra_Wide}</span>
+                        </div>
+                    `;
+                }
+                
+                if (cameraSpecs.Rear_Telephoto_1) {
+                    cameraHTML += `
+                        <div class="spec-item">
+                            <span class="spec-label">Telephoto 1</span>
+                            <span class="spec-value">${cameraSpecs.Rear_Telephoto_1}</span>
+                        </div>
+                    `;
+                }
+                
+                if (cameraSpecs.Rear_Telephoto_2) {
+                    cameraHTML += `
+                        <div class="spec-item">
+                            <span class="spec-label">Telephoto 2</span>
+                            <span class="spec-value">${cameraSpecs.Rear_Telephoto_2}</span>
+                        </div>
+                    `;
+                }
+                
+                cameraHTML += `</div>`;
+            }
+            
+            // Front camera
+            if (cameraSpecs.Front_Camera) {
+                cameraHTML += `
+                    <div class="camera-section">
+                        <h4>Front Camera</h4>
+                        <div class="spec-item">
+                            <span class="spec-label">Selfie Camera</span>
+                            <span class="spec-value">${cameraSpecs.Front_Camera}</span>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // Video recording
+            if (cameraSpecs.Video_Recording) {
+                cameraHTML += `
+                    <div class="camera-section">
+                        <h4>Video Recording</h4>
+                        <div class="spec-item">
+                            <span class="spec-label">Max Resolution</span>
+                            <span class="spec-value">${cameraSpecs.Video_Recording}</span>
+                        </div>
+                `;
+                
+                if (cameraSpecs.Slow_Motion) {
+                    cameraHTML += `
+                        <div class="spec-item">
+                            <span class="spec-label">Slow Motion</span>
+                            <span class="spec-value">${cameraSpecs.Slow_Motion}</span>
+                        </div>
+                    `;
+                }
+                
+                cameraHTML += `</div>`;
+            }
+            
+            // Camera features
+            if (cameraSpecs.Features && Array.isArray(cameraSpecs.Features)) {
+                cameraHTML += `
+                    <div class="camera-section">
+                        <h4>Camera Features</h4>
+                        <div class="features-list">
+                            ${cameraSpecs.Features.map(feature => `
+                                <div class="feature-item">
+                                    <i class="fas fa-camera-retro"></i>
+                                    <span>${feature}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // Other camera specs
+            const otherCameraSpecs = ['AutoFocus', 'Flash'];
+            otherCameraSpecs.forEach(spec => {
+                if (cameraSpecs[spec]) {
+                    cameraHTML += `
+                        <div class="spec-item">
+                            <span class="spec-label">${formatSpecLabel(spec)}</span>
+                            <span class="spec-value">${cameraSpecs[spec]}</span>
+                        </div>
+                    `;
+                }
+            });
+            
+            cameraHTML += `</div>`;
+            return cameraHTML;
+        }
+        
+        // Generate connectivity specifications
+        function generateConnectivitySpecs(connectivitySpecs) {
+            // Check if connectivity specs has any meaningful data
+            if (!hasValidSpecData(connectivitySpecs)) {
+                return '';
+            }
+            
+            let connectivityHTML = `
+                <div class="spec-category connectivity-specs">
+                    <h3><i class="fas fa-wifi"></i> Connectivity</h3>
+            `;
+            
+            // Network connectivity
+            const networkSpecs = ['Wifi', 'Bluetooth', '5g', 'Nfc', 'UWB'];
+            networkSpecs.forEach(spec => {
+                if (connectivitySpecs[spec]) {
+                    connectivityHTML += `
+                        <div class="spec-item">
+                            <span class="spec-label">${formatSpecLabel(spec)}</span>
+                            <span class="spec-value">${formatSpecValue(connectivitySpecs[spec])}</span>
+                        </div>
+                    `;
+                }
+            });
+            
+            // Location services
+            if (connectivitySpecs.Location) {
+                connectivityHTML += `
+                    <div class="spec-item">
+                        <span class="spec-label">Location Services</span>
+                        <span class="spec-value">${connectivitySpecs.Location}</span>
+                    </div>
+                `;
+            }
+            
+            // USB and other connections
+            const connectionSpecs = ['Usb', 'MHL', 'Wi-Fi Direct'];
+            connectionSpecs.forEach(spec => {
+                if (connectivitySpecs[spec]) {
+                    connectivityHTML += `
+                        <div class="spec-item">
+                            <span class="spec-label">${formatSpecLabel(spec)}</span>
+                            <span class="spec-value">${formatSpecValue(connectivitySpecs[spec])}</span>
+                        </div>
+                    `;
+                }
+            });
+            
+            connectivityHTML += `</div>`;
+            return connectivityHTML;
+        }
+        
+        // Generate network specifications
+        function generateNetworkSpecs(networkSpecs) {
+            // Check if network specs has any meaningful data
+            if (!hasValidSpecData(networkSpecs)) {
+                return '';
+            }
+            
+            let networkHTML = `
+                <div class="spec-category network-specs">
+                    <h3><i class="fas fa-signal"></i> Network Support</h3>
+            `;
+            
+            // SIM support
+            if (networkSpecs.SIM) {
+                networkHTML += `
+                    <div class="spec-item">
+                        <span class="spec-label">SIM Support</span>
+                        <span class="spec-value">${networkSpecs.SIM}</span>
+                    </div>
+                `;
+            }
+            
+            // Network bands
+            const networkTypes = ['2G', '3G', '4G FDD LTE', '4G TDD LTE', '5G FDD Sub6', '5G TDD Sub6'];
+            networkTypes.forEach(networkType => {
+                if (networkSpecs[networkType]) {
+                    networkHTML += `
+                        <div class="spec-item">
+                            <span class="spec-label">${networkType}</span>
+                            <span class="spec-value">${networkSpecs[networkType]}</span>
+                        </div>
+                    `;
+                }
+            });
+            
+            networkHTML += `</div>`;
+            return networkHTML;
+        }
+        
+        // Generate display specifications
+        function generateDisplaySpecs(displaySpecs) {
+            // Check if display specs has any meaningful data
+            if (!hasValidSpecData(displaySpecs)) {
+                return '';
+            }
+            
+            let displayHTML = `
+                <div class="spec-category display-specs">
+                    <h3><i class="fas fa-mobile-alt"></i> Display</h3>
+            `;
+            
+            if (displaySpecs.Main) {
+                const mainDisplay = displaySpecs.Main;
+                
+                // Size and type
+                if (mainDisplay.Size) {
+                    displayHTML += `
+                        <div class="spec-item">
+                            <span class="spec-label">Screen Size</span>
+                            <span class="spec-value">${mainDisplay.Size}</span>
+                        </div>
+                    `;
+                }
+                
+                if (mainDisplay.Type) {
+                    displayHTML += `
+                        <div class="spec-item">
+                            <span class="spec-label">Display Type</span>
+                            <span class="spec-value">${mainDisplay.Type}</span>
+                        </div>
+                    `;
+                }
+                
+                if (mainDisplay.Resolution) {
+                    displayHTML += `
+                        <div class="spec-item">
+                            <span class="spec-label">Resolution</span>
+                            <span class="spec-value">${mainDisplay.Resolution}</span>
+                        </div>
+                    `;
+                }
+                
+                if (mainDisplay.Refresh_Rate) {
+                    displayHTML += `
+                        <div class="spec-item">
+                            <span class="spec-label">Refresh Rate</span>
+                            <span class="spec-value">${mainDisplay.Refresh_Rate}</span>
+                        </div>
+                    `;
+                }
+                
+                if (mainDisplay.Color_Depth) {
+                    displayHTML += `
+                        <div class="spec-item">
+                            <span class="spec-label">Color Depth</span>
+                            <span class="spec-value">${mainDisplay.Color_Depth}</span>
+                        </div>
+                    `;
+                }
+                
+                if (mainDisplay.S_Pen_Support) {
+                    displayHTML += `
+                        <div class="spec-item">
+                            <span class="spec-label">S Pen Support</span>
+                            <span class="spec-value">${mainDisplay.S_Pen_Support}</span>
+                        </div>
+                    `;
+                }
+            }
+            
+            displayHTML += `</div>`;
+            return displayHTML;
+        }
+        
+        // Format specification labels for better readability
+        function formatSpecLabel(label) {
+            return label
+                .replace(/([A-Z])/g, ' $1')
+                .replace(/^./, str => str.toUpperCase())
+                .replace(/_/g, ' ')
+                .trim();
+        }
+        
+        // Format specification values for better display
+        function formatSpecValue(value) {
+            if (value === null || value === undefined) return 'N/A';
+            if (typeof value === 'boolean') return value ? 'Yes' : 'No';
+            if (Array.isArray(value)) return value.join(', ');
+            return value.toString();
+        }
+        
+        // Update offers
+        function updateOffers(offers) {
+            const offersContainer = document.getElementById('offersContainer');
+            
+            if (!offers || offers.length === 0) {
+                offersContainer.innerHTML = '<p class="text-muted">No offers available</p>';
+                return;
+            }
+            
+            // Sort offers by price
+            const sortedOffers = [...offers].sort((a, b) => a.price - b.price);
+            
+            const offersHTML = sortedOffers.map(offer => {
+                const discount = offer.originalPrice > 0 ? 
+                    Math.round(((offer.originalPrice - offer.price) / offer.originalPrice) * 100) : 0;
+                
+                return `
+                    <div class="offer-item">
+                        <div class="offer-retailer">
+                            <div class="retailer-info">
+                                <h4>${offer.retailer || 'Unknown Retailer'}</h4>
+                                ${offer.saleEnds ? `<p class="sale-ends"><i class="fas fa-clock"></i> Sale ends: ${offer.saleEnds}</p>` : ''}
+                            </div>
+                        </div>
+                        <div class="offer-price">
+                            <div class="price">R${offer.price.toLocaleString()}</div>
+                            ${offer.originalPrice > 0 && discount > 0 ? `
+                                <div class="original-price">R${offer.originalPrice.toLocaleString()}</div>
+                            ` : ''}
+                        </div>
+                        <div class="offer-actions">
+                            <button class="btn btn-visit" onclick="visitRetailer('${offer.url || '#'}')">
+                                Visit Store
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            offersContainer.innerHTML = offersHTML;
+        }
+        
+        
+        // Action functions
+        function compareProduct() {
+            if (!currentProduct) return;
+            
+            // Add to comparison (placeholder functionality)
+            alert(`Added ${currentProduct.brand} ${currentProduct.model} to comparison`);
+        }
+        
+        function addToWishlist() {
+            if (!currentProduct) return;
+            
+            // Add to wishlist (placeholder functionality)
+            alert(`Added ${currentProduct.brand} ${currentProduct.model} to wishlist`);
+        }
+        
+        function visitRetailer(url) {
+            if (url && url !== '#') {
+                window.open(url, '_blank');
+            } else {
+                alert('Retailer link not available');
+            }
+        }
+        
+        
+        // Error handling
+        function showError(message) {
+            const main = document.querySelector('.main .container');
+            main.innerHTML = `
+                <div class="alert alert-danger text-center" role="alert">
+                    <h4>Error</h4>
+                    <p>${message}</p>
+                    <a href="smartphones.html" class="btn btn-primary">Back to Smartphones</a>
+                </div>
+            `;
+        }
+        
+        // Price History Functions
+        function initializePriceChart() {
+            const ctx = document.getElementById('priceChart');
+            if (!ctx) return;
+            
+            // Generate sample price data
+            const priceData = generatePriceData(currentTimePeriod);
+            
+            priceChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: priceData.labels,
+                    datasets: [{
+                        label: 'Price',
+                        data: priceData.prices,
+                        borderColor: '#1f2937',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4,
+                        pointBackgroundColor: priceData.pointColors,
+                        pointBorderColor: priceData.pointColors,
+                        pointRadius: 6,
+                        pointHoverRadius: 8,
+                        pointBorderWidth: 2,
+                        pointBackgroundColor: '#ffffff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                            titleColor: '#ffffff',
+                            bodyColor: '#ffffff',
+                            borderColor: '#ef4444',
+                            borderWidth: 1,
+                            titleFont: {
+                                size: window.innerWidth < 768 ? 12 : 14
+                            },
+                            bodyFont: {
+                                size: window.innerWidth < 768 ? 11 : 13
+                            },
+                            callbacks: {
+                                label: function(context) {
+                                    return `Price: R ${context.parsed.y.toLocaleString()}`;
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.1)',
+                                drawBorder: false
+                            },
+                            ticks: {
+                                color: '#6b7280',
+                                font: {
+                                    size: window.innerWidth < 768 ? 10 : 12
+                                },
+                                maxTicksLimit: window.innerWidth < 768 ? 6 : 10
+                            }
+                        },
+                        y: {
+                            beginAtZero: false,
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.1)',
+                                drawBorder: false
+                            },
+                            ticks: {
+                                color: '#6b7280',
+                                font: {
+                                    size: window.innerWidth < 768 ? 10 : 12
+                                },
+                                maxTicksLimit: window.innerWidth < 768 ? 5 : 8,
+                                callback: function(value) {
+                                    return 'R ' + value.toLocaleString();
+                                }
+                            }
+                        }
+                    },
+                    interaction: {
+                        intersect: false,
+                        mode: 'index'
+                    },
+                    elements: {
+                        point: {
+                            radius: window.innerWidth < 768 ? 4 : 6,
+                            hoverRadius: window.innerWidth < 768 ? 6 : 8
+                        },
+                        line: {
+                            borderWidth: window.innerWidth < 768 ? 2 : 3
+                        }
+                    }
+                }
+            });
+            
+            updatePriceStats(priceData.prices);
+        }
+        
+        function generatePriceData(period) {
+            const now = new Date();
+            let labels = [];
+            let prices = [];
+            let pointColors = [];
+            
+            let dataPoints = 0;
+            let dateInterval = 0;
+            
+            switch(period) {
+                case '30d':
+                    // On mobile, show only 5 key days; on desktop, show all 30 days
+                    dataPoints = (window.innerWidth < 768) ? 5 : 30;
+                    dateInterval = 1; // 1 day
+                    break;
+                case '3m':
+                    dataPoints = 3;
+                    dateInterval = 30; // 1 month
+                    break;
+                case '6m':
+                    dataPoints = 6;
+                    dateInterval = 30; // 1 month
+                    break;
+                case '12m':
+                    dataPoints = 12;
+                    dateInterval = 30; // 1 month
+                    break;
+            }
+            
+            // Generate base price around R 20,000
+            let basePrice = 20000;
+            let currentPrice = basePrice;
+            
+            if (period === '30d' && window.innerWidth < 768) {
+                // Mobile 30-day view: only show specific days (1, 8, 15, 22, 30)
+                const keyDays = [1, 8, 15, 22, 30];
+                
+                for (let i = 0; i < keyDays.length; i++) {
+                    const dayNumber = keyDays[i];
+                    const date = new Date(now);
+                    date.setDate(dayNumber);
+                    
+                    // Generate realistic price fluctuations
+                    const variation = (Math.random() - 0.5) * 2000; // ±1000 variation
+                    const trend = Math.sin(i / keyDays.length * Math.PI) * 1000; // Seasonal trend
+                    currentPrice = basePrice + variation + trend;
+                    
+                    // Ensure price stays within reasonable bounds
+                    currentPrice = Math.max(15000, Math.min(25000, currentPrice));
+                    
+                    labels.push(formatDateLabel(date, period));
+                    prices.push(Math.round(currentPrice));
+                    
+                    // Determine if this is a high or low price point
+                    const isHigh = currentPrice > basePrice + 500;
+                    const isLow = currentPrice < basePrice - 500;
+                    pointColors.push(isHigh ? '#ef4444' : (isLow ? '#10b981' : '#1f2937'));
+                }
+            } else {
+                // Desktop 30-day view or other periods: show all data points
+                for (let i = 0; i < dataPoints; i++) {
+                    const date = new Date(now);
+                    
+                    if (period === '30d') {
+                        // For 30 days, start from day 1 of current month
+                        date.setDate(1 + i);
+                    } else {
+                        // For months, start from 6/12 months ago and go forward
+                        date.setMonth(date.getMonth() - (dataPoints - 1) + i);
+                    }
+                    
+                    // Generate realistic price fluctuations
+                    const variation = (Math.random() - 0.5) * 2000; // ±1000 variation
+                    const trend = Math.sin(i / dataPoints * Math.PI) * 1000; // Seasonal trend
+                    currentPrice = basePrice + variation + trend;
+                    
+                    // Ensure price stays within reasonable bounds
+                    currentPrice = Math.max(15000, Math.min(25000, currentPrice));
+                    
+                    labels.push(formatDateLabel(date, period));
+                    prices.push(Math.round(currentPrice));
+                    
+                    // Determine if this is a high or low price point
+                    const isHigh = currentPrice > basePrice + 500;
+                    const isLow = currentPrice < basePrice - 500;
+                    pointColors.push(isHigh ? '#ef4444' : (isLow ? '#10b981' : '#1f2937'));
+                }
+            }
+            
+            return { labels, prices, pointColors };
+        }
+        
+        function formatDateLabel(date, period) {
+            if (period === '30d') {
+                return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+            } else {
+                return date.toLocaleDateString('en-US', { month: 'short', year: '2-digit' });
+            }
+        }
+        
+        function shouldShowDateLabel(dayIndex, period) {
+            if (period === '30d' && window.innerWidth < 768) {
+                // On mobile, only show specific dates: 1, 8, 15, 22, 30
+                const dayNumber = dayIndex + 1;
+                return [1, 8, 15, 22, 30].includes(dayNumber);
+            }
+            return true; // Show all dates on desktop or other periods
+        }
+        
+        function updatePriceStats(prices) {
+            if (!prices || prices.length === 0) return;
+            
+            const current = prices[prices.length - 1];
+            const lowest = Math.min(...prices);
+            const highest = Math.max(...prices);
+            
+            document.getElementById('currentPrice').textContent = `R ${current.toLocaleString()}`;
+            document.getElementById('lowestPrice').textContent = `R ${lowest.toLocaleString()}`;
+            document.getElementById('highestPrice').textContent = `R ${highest.toLocaleString()}`;
+        }
+        
+        function switchTimePeriod(period) {
+            currentTimePeriod = period;
+            
+            // Update dropdown selection
+            const dropdown = document.getElementById('timePeriodSelect');
+            if (dropdown) {
+                dropdown.value = period;
+            }
+            
+            // Update chart data
+            if (priceChart) {
+                const newData = generatePriceData(period);
+                priceChart.data.labels = newData.labels;
+                priceChart.data.datasets[0].data = newData.prices;
+                priceChart.data.datasets[0].pointBackgroundColor = newData.pointColors;
+                priceChart.data.datasets[0].pointBorderColor = newData.pointColors;
+                priceChart.update('active');
+                
+                updatePriceStats(newData.prices);
+            }
+        }
+        
+        // Make functions globally available
+        window.compareProduct = compareProduct;
+        window.addToWishlist = addToWishlist;
+        window.visitRetailer = visitRetailer;
+        window.selectStorage = selectStorage;
+        window.selectColor = selectColor;
+        window.switchTimePeriod = switchTimePeriod;
+    </script>
+</body>
+</html>
