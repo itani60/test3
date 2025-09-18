@@ -660,24 +660,23 @@
     box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
 }
 
-/* Verified Badge */
-.verified-badge {
+
+/* Verified Icon */
+.verified-icon {
     position: absolute;
     right: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, #10b981, #059669);
-    color: white;
-    padding: 0.5rem;
-    border-radius: 50%;
-    width: 32px;
-    height: 32px;
-    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+    top: 50%;
+    transform: translateY(-50%);
+    color: #1da1f2;
+    font-size: 20px;
+    z-index: 10;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
-.verified-badge .material-symbols-outlined {
-    font-size: 1rem;
+.verified-icon:hover {
+    color: #0d8bd9;
+    transform: translateY(-50%) scale(1.1);
 }
 
 /* Submit Button */
@@ -777,15 +776,6 @@
         font-size: 0.85rem;
     }
     
-    .verified-badge {
-        width: 28px;
-        height: 28px;
-        padding: 0.4rem;
-    }
-    
-    .verified-badge .material-symbols-outlined {
-        font-size: 0.9rem;
-    }
 }
 
 /* Account Settings Page Styling */
