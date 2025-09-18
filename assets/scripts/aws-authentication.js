@@ -28,6 +28,14 @@ async function makeApiCall(endpoint, method = 'POST', data = null) {
         const result = await response.json();
         
         console.log(`API response from ${endpoint}:`, result);
+        
+        // Handle Lambda response format
+        if (result.statusCode && result.body) {
+            // Lambda returns {statusCode: 200, body: "..."}
+            const bodyData = JSON.parse(result.body);
+            return bodyData;
+        }
+        
         return result;
     } catch (error) {
         console.error(`API call error for ${endpoint}:`, error);
@@ -138,3 +146,4 @@ window.awsAuth = {
 };
 
 console.log('AWS Authentication script loaded successfully');
+
