@@ -43,6 +43,8 @@ async function loadCurrentUserData() {
         // Fetch user data from API
         const userData = await awsAuth.getUserInfo(userEmail);
         
+        console.log('User data received:', userData);
+        
         if (userData && userData.success) {
             populateForm(userData.user);
         } else {
