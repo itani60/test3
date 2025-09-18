@@ -1,3 +1,4 @@
+
 /**
  * Account Management Script
  * Handles user profile updates (names only, email is readonly)
@@ -100,8 +101,12 @@ function updateVerificationBadge(isVerified) {
  */
 function setupFormSubmission() {
     const form = document.querySelector('form');
+    console.log('Form found:', form);
     if (form) {
+        console.log('Adding submit event listener to form');
         form.addEventListener('submit', handleFormSubmit);
+    } else {
+        console.error('No form found on the page');
     }
 }
 
@@ -111,7 +116,9 @@ function setupFormSubmission() {
 async function handleFormSubmit(event) {
     event.preventDefault();
     
-    console.log('Form submitted');
+    console.log('Form submitted - handleFormSubmit called');
+    console.log('Event:', event);
+    console.log('Form element:', event.target);
     
     // Get form data
     const formData = new FormData(event.target);
